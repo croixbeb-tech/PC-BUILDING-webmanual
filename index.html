@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Desktop PC — Field Assembly Manual</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Archivo+Black&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ============ tokens ============ */
+:root{
+  --paper:#F2EFE6; --paper2:#E9E5D7; --ink:#1B1915; --ink2:#5B564B;
+  --hair:rgba(27,25,21,.16); --hair2:rgba(27,25,21,.34);
+  --accent:#E4572E; --accent-dk:#B03A16; --accent-tint:#F7E0D6;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:92px}
+body{background:var(--paper);color:var(--ink);font:400 16px/1.6 'Archivo',sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+::selection{background:var(--accent);color:var(--paper)}
+::-webkit-scrollbar{width:10px}
+::-webkit-scrollbar-track{background:var(--paper)}
+::-webkit-scrollbar-thumb{background:var(--ink);border:2px solid var(--paper)}
+a{color:inherit}
+.mono{font-family:'IBM Plex Mono',monospace}
+
+/* paper grain */
+.grain{position:fixed;inset:-50px;pointer-events:none;z-index:2000;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='140' height='140' filter='url(%23n)' opacity='0.055'/></svg>")}
+
+/* ============ header ============ */
+header{position:sticky;top:0;z-index:1000;background:var(--paper);border-bottom:1.5px solid var(--ink)}
+.head-in{max-width:1240px;margin:0 auto;padding:0 32px;height:60px;display:flex;align-items:center;gap:28px}
+.brand{font:600 12px/1 'IBM Plex Mono';letter-spacing:.08em;white-space:nowrap}
+.brand b{color:var(--accent)}
+nav{display:flex;gap:22px;margin-left:auto;overflow-x:auto;scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+nav a{font:500 11px/1 'IBM Plex Mono';letter-spacing:.1em;text-decoration:none;color:var(--ink2);padding:8px 0;white-space:nowrap;border-bottom:2px solid transparent;transition:color .2s,border-color .2s}
+nav a:hover{color:var(--ink)}
+nav a.on{color:var(--accent);border-color:var(--accent)}
+.rev{font:500 11px/1 'IBM Plex Mono';letter-spacing:.08em;color:var(--ink2);white-space:nowrap}
+#prog{position:absolute;left:0;bottom:-1.5px;height:3px;width:0;background:var(--accent);transition:width .1s linear}
+
+/* ============ frame ============ */
+main{max-width:1240px;margin:0 auto;border-inline:1px solid var(--hair)}
+section{padding:88px 48px;border-bottom:1px solid var(--hair)}
+
+/* ============ hero ============ */
+.hero{padding:0!important;border-bottom:1.5px solid var(--ink);min-height:calc(100vh - 60px);display:flex;flex-direction:column}
+.hero-top{display:flex;justify-content:space-between;padding:22px 48px 0;font:500 11px/1 'IBM Plex Mono';letter-spacing:.12em;color:var(--ink2)}
+.hero-mid{flex:1;padding:40px 48px 36px;display:flex;flex-direction:column;justify-content:center}
+h1{font-family:'Archivo Black';font-weight:400;text-transform:uppercase;font-size:clamp(3.2rem,9.4vw,7.6rem);line-height:.92;letter-spacing:-.015em}
+h1 .hollow{color:transparent;-webkit-text-stroke:2.5px var(--ink)}
+h1 .dot{color:var(--accent)}
+.hero-note{margin-top:18px;font:500 12px/1.6 'IBM Plex Mono';letter-spacing:.06em;color:var(--accent)}
+.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:56px;margin-top:44px;align-items:end}
+.lede{max-width:52ch;font-size:17.5px;color:var(--ink);font-weight:500}
+.lede em{font-style:normal;box-shadow:inset 0 -7px 0 var(--accent-tint)}
+.how{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:22px;font:600 11px/1 'IBM Plex Mono';letter-spacing:.1em}
+.how a{text-decoration:none;color:var(--ink2);border-bottom:1px solid var(--hair2);padding-bottom:3px;transition:color .2s,border-color .2s}
+.how a:hover{color:var(--accent);border-color:var(--accent)}
+.how i{font-style:normal;color:var(--accent)}
+.spec{border-top:1.5px solid var(--ink)}
+.spec div{display:flex;justify-content:space-between;gap:16px;padding:9px 2px;border-bottom:1px solid var(--hair);font:500 11.5px/1.5 'IBM Plex Mono';letter-spacing:.04em}
+.spec span:first-child{color:var(--ink2)}
+.spec b{font-weight:600;text-align:right}
+.ticker{border-top:1.5px solid var(--ink);overflow:hidden;background:var(--paper)}
+.ticker-track{display:flex;width:max-content;animation:tk 36s linear infinite}
+.ticker:hover .ticker-track{animation-play-state:paused}
+.ticker-track span{padding:11px 0;font:500 11.5px/1 'IBM Plex Mono';letter-spacing:.14em;white-space:nowrap;color:var(--ink)}
+.ticker-track span i{font-style:normal;color:var(--accent)}
+@keyframes tk{to{transform:translateX(-50%)}}
+
+/* ============ section head ============ */
+.sec-head{display:grid;grid-template-columns:auto 1fr auto;gap:28px;align-items:end;margin-bottom:52px}
+.sec-no{border:1.5px solid var(--ink);border-top:5px solid var(--accent);padding:10px 14px;font:600 13px/1 'IBM Plex Mono';letter-spacing:.1em}
+.sec-head h2{font-family:'Archivo Black';font-weight:400;text-transform:uppercase;font-size:clamp(1.9rem,4.4vw,3.3rem);line-height:1;letter-spacing:-.01em}
+.sec-head .sub{font:500 12px/1.5 'IBM Plex Mono';letter-spacing:.06em;color:var(--ink2);margin-top:8px}
+.sec-tag{font:600 10px/1.6 'IBM Plex Mono';letter-spacing:.14em;color:var(--accent);text-align:right;align-self:start;padding-top:4px}
+@media(max-width:760px){.sec-tag{display:none}}
+
+/* reveal */
+.rv{opacity:0;transform:translateY(16px);transition:opacity .7s ease,transform .7s ease}
+.rv.in{opacity:1;transform:none}
+
+/* ============ 00 exploded diagram ============ */
+.parts-wrap{display:grid;grid-template-columns:1.02fr .98fr;gap:44px;align-items:start}
+.dia{border:1.5px solid var(--ink);position:relative;padding:52px 14px 20px;
+  background-image:radial-gradient(rgba(27,25,21,.13) 1px,transparent 1.3px);background-size:22px 22px}
+.fig{position:absolute;top:12px;left:14px;font:600 10px/1 'IBM Plex Mono';letter-spacing:.14em;color:var(--accent)}
+.dia-hint{margin-top:10px;font:500 10.5px/1.5 'IBM Plex Mono';letter-spacing:.08em;color:var(--ink2);text-align:center}
+.dia-hint i{font-style:normal;color:var(--accent)}
+#exp{width:100%;height:auto;display:block;cursor:crosshair}
+#exp .p{cursor:pointer;outline:none;transition:opacity .3s}
+#exp .st{stroke:var(--ink);stroke-width:1.6;fill:none;stroke-linecap:round;stroke-linejoin:round}
+#exp .fl{fill:var(--paper)}
+#exp .d{stroke:var(--ink);stroke-width:1;opacity:.55;fill:none;stroke-linecap:round}
+#exp .d2{stroke:var(--ink);stroke-width:1;opacity:.42;fill:none}
+#exp .di{stroke:var(--ink);stroke-width:1;opacity:.45;fill:none;stroke-dasharray:3 4}
+#exp .tri{fill:var(--ink);opacity:.85}
+#exp .x{stroke:var(--ink);opacity:.3;stroke-width:1.2;stroke-dasharray:1 6;stroke-linecap:round}
+#exp .ix{font:600 11px 'IBM Plex Mono';fill:var(--ink2)}
+#exp .cx{font:600 9px 'IBM Plex Mono';fill:var(--ink);opacity:.65}
+#exp .it2{font:500 8px 'IBM Plex Mono';fill:var(--ink);opacity:.8;letter-spacing:.05em}
+#exp .lbl{pointer-events:none;transition:opacity .3s}
+#exp .lt{font:600 11px 'IBM Plex Mono';fill:var(--ink);letter-spacing:.03em}
+#exp .ls{font:400 9.5px 'IBM Plex Mono';fill:var(--ink2)}
+#exp .ld{fill:var(--ink)}
+#exp .dl{stroke:var(--ink);stroke-width:1;opacity:.35}
+#exp .p *,#exp .lbl *{transition:stroke .25s,fill .25s}
+#exp.focus .p:not(.on){opacity:.22}
+#exp.focus .lbl:not(.on){opacity:.25}
+#exp .p.on .st,#exp .p.on .d,#exp .p.on .d2,#exp .p.on .di{stroke:var(--accent)}
+#exp .p.on .fl{fill:var(--accent-tint)}
+#exp .p.on .tri{fill:var(--accent)}
+#exp .p.on text{fill:var(--accent)}
+#exp .lbl.on .lt{fill:var(--accent)}
+#exp .lbl.on .ls{fill:var(--accent-dk)}
+#exp .lbl.on .ld{fill:var(--accent)}
+#exp .lbl.on .dl{stroke:var(--accent);opacity:.7}
+
+.readout{position:sticky;top:92px}
+.ro-index{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--hair2);margin-bottom:20px}
+.idx{display:flex;gap:10px;align-items:center;background:none;border:none;border-bottom:1px solid var(--hair);border-right:1px solid var(--hair);padding:11px 14px;font:500 11px/1 'IBM Plex Mono';letter-spacing:.06em;color:var(--ink2);cursor:pointer;text-align:left;transition:background .2s,color .2s}
+.idx:nth-child(even){border-right:none}
+.idx b{font-weight:600;color:var(--ink)}
+.idx:hover{background:var(--paper2);color:var(--ink)}
+.idx.on{background:var(--ink);color:var(--paper)}
+.idx.on b{color:var(--accent)}
+.ro-panel{border:1.5px solid var(--ink)}
+.ro-head{display:flex;align-items:baseline;gap:14px;padding:16px 20px;border-bottom:1.5px solid var(--ink);background:var(--ink);color:var(--paper)}
+#roNo{font:600 13px/1 'IBM Plex Mono';color:var(--accent)}
+#roName{font-family:'Archivo Black';font-size:19px;letter-spacing:.02em;text-transform:uppercase}
+#roBody{padding:6px 20px 16px}
+#roBody.swap{animation:sw .3s ease}
+@keyframes sw{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
+.ro-row{display:grid;grid-template-columns:96px 1fr;gap:14px;padding:12px 0;border-bottom:1px solid var(--hair)}
+.ro-row:last-child{border:none}
+.ro-row .k{font:600 10px/1.7 'IBM Plex Mono';letter-spacing:.14em;color:var(--ink2)}
+.ro-row p{font-size:14px;line-height:1.55}
+.ro-row.warn .k,.ro-row.warn p{color:var(--accent-dk)}
+.ro-row.warn p{font-weight:500}
+
+/* ============ 01 compatibility ============ */
+.rule-box{border:1.5px solid var(--ink);position:relative;padding:34px 30px 30px;margin-bottom:44px}
+.rule-box::before{content:"";position:absolute;inset:5px;border:1px dashed var(--hair2);pointer-events:none}
+.rule-tag{position:absolute;top:-11px;left:22px;background:var(--accent);color:var(--paper);font:600 10px/1 'IBM Plex Mono';letter-spacing:.16em;padding:6px 10px}
+.rule-box p{font-size:clamp(1.05rem,1.9vw,1.35rem);font-weight:500;max-width:62ch}
+.rule-box p b{box-shadow:inset 0 -8px 0 var(--accent-tint)}
+.buyflow{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:24px;font:600 11px/1 'IBM Plex Mono';letter-spacing:.1em}
+.buyflow span{border:1.5px solid var(--ink);padding:9px 13px;background:var(--paper)}
+.buyflow span.hot{background:var(--ink);color:var(--paper)}
+.buyflow i{font-style:normal;color:var(--accent);font-size:14px}
+.tbl-wrap{overflow-x:auto;border:1px solid var(--hair2)}
+table{width:100%;border-collapse:collapse;min-width:760px}
+thead th{font:600 10px/1 'IBM Plex Mono';letter-spacing:.16em;color:var(--ink2);text-align:left;padding:14px 18px;border-bottom:1.5px solid var(--ink);background:var(--paper2)}
+tbody td{padding:17px 18px;border-bottom:1px solid var(--hair);vertical-align:top;font:500 13px/1.5 'IBM Plex Mono'}
+tbody tr:last-child td{border-bottom:none}
+tbody tr{transition:background .2s,box-shadow .2s}
+tbody tr:hover{background:var(--paper2);box-shadow:inset 3px 0 0 var(--accent)}
+td .sock{font-family:'Archivo Black';font-size:19px;letter-spacing:.01em}
+td .mk{display:inline-block;font:600 9px/1 'IBM Plex Mono';letter-spacing:.12em;padding:4px 7px;border:1px solid var(--ink);margin-top:5px}
+.foot-note{margin-top:14px;font:500 11.5px/1.7 'IBM Plex Mono';letter-spacing:.04em;color:var(--ink2)}
+.foot-note b{color:var(--ink)}
+.compat-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:56px;margin-top:56px;align-items:start}
+h3.blk{font-family:'Archivo Black';font-weight:400;text-transform:uppercase;font-size:15px;letter-spacing:.06em;margin-bottom:20px;display:flex;align-items:center;gap:12px}
+h3.blk::after{content:"";flex:1;height:1px;background:var(--hair2)}
+.r3{display:grid;gap:0}
+.r3 li{list-style:none;display:grid;grid-template-columns:52px 1fr;gap:16px;padding:16px 0;border-top:1px solid var(--hair)}
+.r3 li:last-child{border-bottom:1px solid var(--hair)}
+.r3 .rn{font:600 12px/1.9 'IBM Plex Mono';color:var(--accent);border:1px solid var(--hair2);text-align:center;height:fit-content;padding:2px 0}
+.r3 b{display:block;font:600 14px/1.4 'Archivo';margin-bottom:3px}
+.r3 p{font-size:13.5px;color:var(--ink);line-height:1.55}
+.ff-box{border:1px solid var(--hair2);padding:22px}
+#ffsvg{width:100%;height:auto;display:block}
+#ffsvg .fa{fill:none;stroke:var(--ink);stroke-width:1.5}
+#ffsvg .fl2{stroke:var(--ink);stroke-width:1;opacity:.5}
+#ffsvg text{font:500 9px 'IBM Plex Mono';fill:var(--ink2)}
+.ff-note{margin-top:14px;font-size:13px;line-height:1.55;color:var(--ink2)}
+.ff-note b{color:var(--ink)}
+
+/* ============ 02 sequence ============ */
+.seq-grid{display:grid;grid-template-columns:250px 1fr;gap:60px;align-items:start}
+.rail{position:sticky;top:92px;border-left:1.5px solid var(--ink);padding-left:18px}
+.rail-cap{font:600 10px/1 'IBM Plex Mono';letter-spacing:.16em;color:var(--accent);margin-bottom:16px}
+.rail ol{list-style:none}
+.rail li{margin:0 0 2px}
+.rail a{display:flex;gap:10px;align-items:baseline;text-decoration:none;color:var(--ink2);font:500 10.5px/1 'IBM Plex Mono';letter-spacing:.06em;padding:5px 0;transition:color .2s}
+.rail a::before{content:"";width:7px;height:7px;border:1.2px solid var(--ink2);flex:none;transition:.2s;transform:translateY(-.5px)}
+.rail a:hover{color:var(--ink)}
+.rail li.now a{color:var(--accent);font-weight:600}
+.rail li.now a::before{background:var(--accent);border-color:var(--accent)}
+.steps{max-width:720px}
+.step{display:grid;grid-template-columns:86px 1fr;gap:24px;padding:30px 0 34px;border-top:1px solid var(--hair);position:relative;scroll-margin-top:110px;transition:box-shadow .3s}
+.step:first-child{border-top:none;padding-top:6px}
+.step.now{box-shadow:inset 3px 0 0 var(--accent)}
+.step.now .s-no{color:var(--accent)}
+.s-no{font-family:'Archivo Black';font-size:38px;line-height:1;color:var(--ink2);transition:color .3s}
+.s-body h3{font-family:'Archivo Black';font-weight:400;text-transform:uppercase;font-size:17px;letter-spacing:.04em;margin-bottom:9px}
+.s-body p{font-size:14.5px;line-height:1.6;margin-bottom:10px}
+.co{display:inline-block;font:500 11.5px/1.6 'IBM Plex Mono';letter-spacing:.03em;padding:7px 11px;border:1px solid var(--hair2);color:var(--ink2)}
+.co b{font-weight:600;letter-spacing:.12em;margin-right:8px}
+.co.warn{border-color:var(--accent);color:var(--accent-dk);background:rgba(228,87,46,.05)}
+.co.warn b{color:var(--accent)}
+.co.tip b{color:var(--ink)}
+
+/* ============ 03 power ============ */
+.power-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:start}
+.p-row{display:grid;grid-template-columns:64px 1fr;gap:18px;padding:18px 0;border-top:1px solid var(--hair)}
+.p-row:last-of-type{border-bottom:1px solid var(--hair)}
+.p-row .pn{font:600 12px/1.9 'IBM Plex Mono';color:var(--accent)}
+.p-row b{display:block;font:600 14.5px/1.4 'Archivo';margin-bottom:4px}
+.p-row p{font-size:13.5px;line-height:1.55;color:var(--ink)}
+.calc{border:1.5px solid var(--ink)}
+.calc-head{display:flex;justify-content:space-between;align-items:center;background:var(--ink);color:var(--paper);padding:13px 20px;font:600 11px/1 'IBM Plex Mono';letter-spacing:.14em}
+.calc-head i{font-style:normal;color:var(--accent)}
+.calc-body{padding:24px 24px 22px}
+.f-label{display:block;font:600 10px/1 'IBM Plex Mono';letter-spacing:.16em;color:var(--ink2);margin:18px 0 8px}
+.f-label:first-child{margin-top:0}
+.sel{position:relative}
+.sel select{appearance:none;-webkit-appearance:none;width:100%;background:transparent;border:1px solid var(--hair2);padding:12px 38px 12px 13px;font:500 12.5px/1.4 'IBM Plex Mono';color:var(--ink);cursor:pointer;border-radius:0}
+.sel select:focus{outline:none;border-color:var(--accent)}
+.sel::after{content:"▾";position:absolute;right:13px;top:50%;transform:translateY(-50%);color:var(--accent);pointer-events:none;font-size:13px}
+.extra-row{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
+.cb{display:flex;gap:10px;align-items:center;cursor:pointer;font:500 12px/1 'IBM Plex Mono';color:var(--ink);position:relative}
+.cb input{position:absolute;opacity:0;width:0}
+.cb .bx{width:17px;height:17px;border:1.5px solid var(--ink);display:grid;place-items:center;flex:none;transition:.2s}
+.cb input:checked~.bx{background:var(--accent);border-color:var(--accent)}
+.cb .bx svg{opacity:0;transition:.15s}
+.cb input:checked~.bx svg{opacity:1}
+.calc hr{border:none;border-top:1px solid var(--hair);margin:24px 0 18px}
+.mini{display:flex;justify-content:space-between;align-items:baseline;font:500 11px/1 'IBM Plex Mono';letter-spacing:.1em;color:var(--ink2)}
+.mini b{font-size:19px;color:var(--ink);letter-spacing:0}
+#gauge{width:100%;height:auto;display:block;margin:10px 0 4px}
+#gauge .gb{stroke:var(--ink);stroke-width:1.4}
+#gauge .gt{stroke:var(--ink);stroke-width:1;opacity:.45}
+#gauge text{font:500 8px 'IBM Plex Mono';fill:var(--ink2)}
+#gBand{fill:var(--accent);opacity:.16;transition:x .45s ease,width .45s ease}
+#gRec{fill:var(--accent);transition:x .45s ease}
+#gPeak{transition:transform .45s ease}
+#gPeak path{fill:var(--ink)}
+#gPeak text{font:600 9px 'IBM Plex Mono';fill:var(--ink)}
+.rec-lab{font:600 10px/1 'IBM Plex Mono';letter-spacing:.16em;color:var(--ink2);margin-top:16px}
+.rec-num{display:flex;align-items:baseline;gap:10px}
+.rec-num b{font-family:'Archivo Black';font-weight:400;font-size:62px;line-height:1;color:var(--accent);letter-spacing:-.01em}
+.rec-num span{font:600 20px/1 'IBM Plex Mono';color:var(--accent)}
+#recNote{margin-top:10px;font:500 12px/1.65 'IBM Plex Mono';color:var(--ink);border-left:3px solid var(--accent);padding-left:12px}
+.formula{margin-top:16px;font:400 10.5px/1.7 'IBM Plex Mono';color:var(--ink2)}
+
+/* ============ 04 mistakes ============ */
+.ledger{list-style:none;border:1px solid var(--hair2)}
+.ledger li{display:grid;grid-template-columns:70px 250px 1fr;gap:20px;padding:18px 20px;border-bottom:1px solid var(--hair);transition:background .2s,box-shadow .2s;align-items:baseline}
+.ledger li:last-child{border-bottom:none}
+.ledger li:hover{background:var(--paper2);box-shadow:inset 3px 0 0 var(--accent)}
+.ledger .ec{font:600 12px/1.7 'IBM Plex Mono';color:var(--accent)}
+.ledger b{font:600 15px/1.45 'Archivo'}
+.ledger p{font-size:13.5px;line-height:1.55;color:var(--ink2)}
+.ledger p b2{color:var(--ink);font-weight:600}
+
+/* ============ 05 checklist ============ */
+.chk-grid{display:grid;grid-template-columns:1.35fr .65fr;gap:56px;align-items:start}
+.checks{list-style:none}
+.chk{display:flex;gap:16px;align-items:center;width:100%;background:none;border:none;border-bottom:1px solid var(--hair);padding:15px 6px;cursor:pointer;text-align:left;font:500 14px/1.5 'Archivo';color:var(--ink);transition:background .2s}
+.chk:hover{background:var(--paper2)}
+.chk .bx{width:20px;height:20px;border:1.5px solid var(--ink);display:grid;place-items:center;flex:none;transition:.2s}
+.chk .bx svg{opacity:0;transition:.15s}
+.chk.done .bx{background:var(--accent);border-color:var(--accent)}
+.chk.done .bx svg{opacity:1}
+.chk.done .t{color:var(--ink2)}
+.chk .ci{margin-left:auto;font:600 10px/1 'IBM Plex Mono';color:var(--hair2)}
+.chk.done .ci{color:var(--accent)}
+.cl-side{border:1.5px solid var(--ink);padding:24px;position:sticky;top:92px}
+.cl-count{font:600 11px/1 'IBM Plex Mono';letter-spacing:.14em;color:var(--ink2)}
+.cl-big{font-family:'Archivo Black';font-size:56px;line-height:1;margin:10px 0 16px}
+.cl-big i{font-style:normal;color:var(--ink2);font-size:26px}
+.cl-bar{height:8px;border:1px solid var(--ink);margin-bottom:8px}
+#clFill{display:block;height:100%;width:0;background:var(--accent);transition:width .35s ease}
+.stamp{margin-top:26px;border:3px solid var(--accent);color:var(--accent);padding:16px 14px 13px;text-align:center;font-family:'Archivo Black';text-transform:uppercase;letter-spacing:.07em;line-height:1.25;position:relative;opacity:0;pointer-events:none;transform:rotate(-6deg)}
+.stamp::after{content:"";position:absolute;inset:3px;border:1px solid var(--accent)}
+.stamp small{display:block;font:600 9px/1 'IBM Plex Mono';letter-spacing:.22em;margin-top:7px}
+.stamp.show{animation:stamp .5s cubic-bezier(.2,1.4,.4,1) forwards}
+@keyframes stamp{0%{opacity:0;transform:rotate(-6deg) scale(1.9)}55%{opacity:1;transform:rotate(-6deg) scale(.94)}100%{opacity:1;transform:rotate(-6deg) scale(1)}}
+#resetChk{margin-top:18px;background:none;border:1px solid var(--hair2);padding:9px 16px;font:600 10px/1 'IBM Plex Mono';letter-spacing:.16em;color:var(--ink2);cursor:pointer;transition:.2s}
+#resetChk:hover{border-color:var(--accent);color:var(--accent)}
+
+/* ============ 06 faq ============ */
+.faq{border-top:1.5px solid var(--ink)}
+.fq{border-bottom:1px solid var(--hair)}
+.faq-q{width:100%;display:flex;justify-content:space-between;align-items:center;gap:20px;background:none;border:none;padding:22px 4px;cursor:pointer;text-align:left;font:600 16px/1.4 'Archivo';color:var(--ink);transition:color .2s}
+.faq-q:hover{color:var(--accent)}
+.faq-q .qn{font:600 11px/1 'IBM Plex Mono';color:var(--accent);margin-right:14px}
+.ic{position:relative;width:15px;height:15px;flex:none}
+.ic::before,.ic::after{content:"";position:absolute;background:var(--ink);transition:transform .3s}
+.ic::before{left:0;top:6.5px;width:15px;height:2px}
+.ic::after{left:6.5px;top:0;width:2px;height:15px}
+.fq.open .ic::after{transform:scaleY(0)}
+.fq.open .ic::before{transform:rotate(180deg)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .35s ease}
+.faq-a p{padding:0 4px 24px;max-width:72ch;font-size:14.5px;line-height:1.65;color:var(--ink)}
+.faq-a b{box-shadow:inset 0 -7px 0 var(--accent-tint)}
+
+/* ============ footer ============ */
+footer{border-top:1.5px solid var(--ink)}
+.foot-in{max-width:1240px;margin:0 auto;padding:26px 48px;display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;font:500 11px/1.7 'IBM Plex Mono';letter-spacing:.06em;color:var(--ink2)}
+.foot-in a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--hair2)}
+.foot-in a:hover{color:var(--accent);border-color:var(--accent)}
+.foot-in b{color:var(--ink)}
+
+/* ============ responsive ============ */
+@media(max-width:1000px){
+  .parts-wrap,.compat-grid,.power-grid,.chk-grid{grid-template-columns:1fr;gap:40px}
+  .seq-grid{grid-template-columns:1fr;gap:36px}
+  .rail{position:static;display:flex;gap:2px;overflow-x:auto;border-left:none;border-bottom:1.5px solid var(--ink);padding:0 0 10px}
+  .rail-cap,.rail .rail-cap{display:none}
+  .rail ol{display:flex;gap:4px}
+  .rail li.now a::before{background:var(--accent)}
+  .rail a span{display:none}
+  .readout{position:static}
+  .cl-side{position:static}
+}
+@media(max-width:760px){
+  section{padding:64px 24px}
+  .head-in{padding:0 20px;gap:16px}
+  .rev{display:none}
+  .hero-top,.hero-mid{padding-left:24px;padding-right:24px}
+  .hero-grid{grid-template-columns:1fr;gap:32px}
+  #exp .ls{display:none}
+  .step{grid-template-columns:1fr;gap:8px}
+  .ledger li{grid-template-columns:56px 1fr;grid-template-rows:auto auto}
+  .ledger p{grid-column:2}
+  .ro-row{grid-template-columns:80px 1fr}
+  .rec-num b{font-size:48px}
+}
+</style>
+</head>
+<body>
+<div class="grain" aria-hidden="true"></div>
+
+<header>
+  <div class="head-in">
+    <div class="brand"><b>PCM-01</b> / DESKTOP PC · FIELD MANUAL</div>
+    <nav id="nav">
+      <a href="#parts">PARTS</a>
+      <a href="#compat">MATCH</a>
+      <a href="#sequence">SEQUENCE</a>
+      <a href="#power">POWER</a>
+      <a href="#mistakes">FAILURES</a>
+      <a href="#checklist">CHECKLIST</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <div class="rev">REV. 2025.1</div>
+  </div>
+  <div id="prog"></div>
+</header>
+
+<main>
+
+<!-- ================= HERO ================= -->
+<section class="hero" id="top">
+  <div class="hero-top">
+    <span>DOC. PCM-01 — ASSEMBLY &amp; COMPATIBILITY</span>
+    <span>COMPILED FOR FIRST-TIME BUILDERS</span>
+  </div>
+  <div class="hero-mid">
+    <h1>ASSEMBLE<br><span class="hollow">A DESKTOP</span><br>PC<span class="dot">.</span></h1>
+    <p class="hero-note">↳ EVERY MISTAKE IN THIS MANUAL IS REVERSIBLE. READ §01, BUILD IN ORDER, FLIGHT-CHECK BEFORE BOOT.</p>
+    <div class="hero-grid">
+      <div>
+        <p class="lede">Everything a first-time builder actually needs: <em>which parts must match</em>, the order to assemble them in, how big the power supply should be — and the eight mistakes everyone else makes, so you don't have to.</p>
+        <div class="how">
+          <a href="#compat"><i>01</i> COMPATIBILITY</a><span>→</span>
+          <a href="#sequence"><i>02</i> SEQUENCE</a><span>→</span>
+          <a href="#power"><i>03</i> POWER</a><span>→</span>
+          <a href="#checklist"><i>04</i> FLIGHT-CHECK</a>
+        </div>
+      </div>
+      <div class="spec">
+        <div><span>FIELD</span><b>DESK TOP · TOWER · x86</b></div>
+        <div><span>DIFFICULTY</span><b>▮▮▯▯▯ LOW–MODERATE</b></div>
+        <div><span>BENCH TIME</span><b>2–4 HRS, FIRST PASS</b></div>
+        <div><span>TOOLING</span><b>#2 PHILLIPS · LIGHT · PATIENCE</b></div>
+        <div><span>FAILURE MODE</span><b>99% RECOVERABLE</b></div>
+      </div>
+    </div>
+  </div>
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-track">
+      <span>CPU ↔ SOCKET <i>▸</i> MOTHERBOARD ↔ CHIPSET <i>▸</i> MEMORY ↔ DDR4 / DDR5 <i>▸</i> GPU ↔ PCIE X16 + POWER <i>▸</i> STORAGE ↔ M.2 NVME <i>▸</i> PSU ↔ WATTS + HEADROOM <i>▸</i> COOLER ↔ SOCKET + TDP <i>▸</i> CASE ↔ AIRFLOW <i>▸</i> BIOS ↔ XMP / EXPO <i>▸</i> POST ↔ FANS SPIN <i>▸</i>&nbsp;</span>
+      <span>CPU ↔ SOCKET <i>▸</i> MOTHERBOARD ↔ CHIPSET <i>▸</i> MEMORY ↔ DDR4 / DDR5 <i>▸</i> GPU ↔ PCIE X16 + POWER <i>▸</i> STORAGE ↔ M.2 NVME <i>▸</i> PSU ↔ WATTS + HEADROOM <i>▸</i> COOLER ↔ SOCKET + TDP <i>▸</i> CASE ↔ AIRFLOW <i>▸</i> BIOS ↔ XMP / EXPO <i>▸</i> POST ↔ FANS SPIN <i>▸</i>&nbsp;</span>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 00 PARTS ================= -->
+<section id="parts">
+  <div class="sec-head rv">
+    <div class="sec-no">SEC. 00</div>
+    <div><h2>Parts on the bench</h2><p class="sub">KNOW WHAT EACH THING DOES BEFORE IT GOES INSIDE</p></div>
+    <div class="sec-tag">INTERACTIVE —<br>HOVER THE DRAWING</div>
+  </div>
+  <div class="parts-wrap">
+    <div class="dia rv">
+      <span class="fig">FIG. 01 — EXPLODED VIEW, NOT TO SCALE</span>
+      <!-- Interactive exploded diagram -->
+      <svg id="exp" viewBox="0 0 560 1000" role="group" aria-label="Exploded view of desktop PC components">
+
+        <!-- stack connectors -->
+        <line class="x" x1="250" y1="118" x2="250" y2="144"/>
+        <line class="x" x1="250" y1="248" x2="250" y2="266"/>
+        <line class="x" x1="250" y1="346" x2="250" y2="362"/>
+        <line class="x" x1="250" y1="466" x2="250" y2="488"/>
+        <line class="x" x1="250" y1="530" x2="250" y2="550"/>
+        <line class="x" x1="250" y1="766" x2="250" y2="782"/>
+        <line class="x" x1="250" y1="874" x2="250" y2="890"/>
+
+        <!-- 01 COOLER -->
+        <g class="p" data-part="cooler" tabindex="0" role="button" aria-label="CPU cooler">
+          <text class="ix" x="170" y="40" text-anchor="end">01</text>
+          <rect class="st" x="222" y="16" width="16" height="8"/>
+          <rect class="st" x="262" y="16" width="16" height="8"/>
+          <rect class="st fl" x="182" y="24" width="136" height="88" rx="3"/>
+          <line class="d" x1="192" y1="40" x2="216" y2="40"/><line class="d" x1="192" y1="54" x2="216" y2="54"/>
+          <line class="d" x1="192" y1="82" x2="216" y2="82"/><line class="d" x1="192" y1="96" x2="216" y2="96"/>
+          <line class="d" x1="284" y1="40" x2="308" y2="40"/><line class="d" x1="284" y1="54" x2="308" y2="54"/>
+          <line class="d" x1="284" y1="82" x2="308" y2="82"/><line class="d" x1="284" y1="96" x2="308" y2="96"/>
+          <circle class="st" cx="250" cy="68" r="30"/><circle class="d" cx="250" cy="68" r="24"/><circle class="d" cx="250" cy="68" r="5"/>
+          <path class="d" d="M254 64 Q264 54 268 46"/><path class="d" d="M254 72 Q264 82 268 90"/>
+          <path class="d" d="M246 64 Q236 54 232 46"/><path class="d" d="M246 72 Q236 82 232 90"/>
+        </g>
+        <g class="lbl" data-part="cooler">
+          <circle class="ld" cx="324" cy="68" r="2.2"/><line class="dl" x1="326" y1="68" x2="396" y2="68"/>
+          <text class="lt" x="404" y="65">CPU COOLER</text><text class="ls" x="404" y="79">air tower · socket mount</text>
+        </g>
+
+        <!-- 02 RAM -->
+        <g class="p" data-part="ram" tabindex="0" role="button" aria-label="Memory">
+          <text class="ix" x="210" y="166" text-anchor="end">02</text>
+          <rect class="st fl" x="222" y="150" width="17" height="92" rx="1"/>
+          <line class="d" x1="224" y1="163" x2="237" y2="163"/>
+          <rect class="d2" x="225" y="176" width="11" height="7"/><rect class="d2" x="225" y="188" width="11" height="7"/><rect class="d2" x="225" y="200" width="11" height="7"/>
+          <line class="d" x1="222" y1="233" x2="239" y2="233"/>
+          <rect class="st fl" x="261" y="150" width="17" height="92" rx="1"/>
+          <line class="d" x1="263" y1="163" x2="276" y2="163"/>
+          <rect class="d2" x="264" y="176" width="11" height="7"/><rect class="d2" x="264" y="188" width="11" height="7"/><rect class="d2" x="264" y="200" width="11" height="7"/>
+          <line class="d" x1="261" y1="233" x2="278" y2="233"/>
+        </g>
+        <g class="lbl" data-part="ram">
+          <circle class="ld" cx="284" cy="196" r="2.2"/><line class="dl" x1="286" y1="196" x2="396" y2="196"/>
+          <text class="lt" x="404" y="193">MEMORY ×2</text><text class="ls" x="404" y="207">DDR4 or DDR5 — never both</text>
+        </g>
+
+        <!-- 03 CPU -->
+        <g class="p" data-part="cpu" tabindex="0" role="button" aria-label="Processor">
+          <text class="ix" x="204" y="288" text-anchor="end">03</text>
+          <rect class="st fl" x="216" y="272" width="68" height="68" rx="2"/>
+          <rect class="st" x="232" y="288" width="36" height="36"/>
+          <path class="tri" d="M218 326 L218 338 L230 338 Z"/>
+          <line class="d" x1="250" y1="272" x2="250" y2="277"/><line class="d" x1="250" y1="335" x2="250" y2="340"/>
+        </g>
+        <g class="lbl" data-part="cpu">
+          <circle class="ld" cx="290" cy="306" r="2.2"/><line class="dl" x1="292" y1="306" x2="396" y2="306"/>
+          <text class="lt" x="404" y="303">PROCESSOR</text><text class="ls" x="404" y="317">the socket decides everything</text>
+        </g>
+
+        <!-- 04 GPU -->
+        <g class="p" data-part="gpu" tabindex="0" role="button" aria-label="Graphics card">
+          <text class="ix" x="124" y="384" text-anchor="end">04</text>
+          <path class="d" d="M136 378 H128 V446"/>
+          <rect class="st fl" x="136" y="368" width="228" height="78" rx="3"/>
+          <rect class="d2" x="338" y="374" width="16" height="10"/>
+          <circle class="st" cx="192" cy="407" r="26"/><circle class="d" cx="192" cy="407" r="20"/><circle class="d" cx="192" cy="407" r="5"/>
+          <path class="d" d="M196 403 Q205 395 209 388"/><path class="d" d="M196 411 Q205 419 209 426"/>
+          <path class="d" d="M188 403 Q179 395 175 388"/><path class="d" d="M188 411 Q179 419 175 426"/>
+          <circle class="st" cx="304" cy="407" r="26"/><circle class="d" cx="304" cy="407" r="20"/><circle class="d" cx="304" cy="407" r="5"/>
+          <path class="d" d="M308 403 Q317 395 321 388"/><path class="d" d="M308 411 Q317 419 321 426"/>
+          <path class="d" d="M300 403 Q291 395 287 388"/><path class="d" d="M300 411 Q291 419 287 426"/>
+          <rect class="st" x="146" y="446" width="18" height="14"/>
+          <rect class="st" x="172" y="446" width="94" height="14"/>
+          <line class="d2" x1="154" y1="446" x2="154" y2="460"/><line class="d2" x1="160" y1="446" x2="160" y2="460"/>
+          <line class="d2" x1="182" y1="446" x2="182" y2="460"/><line class="d2" x1="192" y1="446" x2="192" y2="460"/>
+          <line class="d2" x1="202" y1="446" x2="202" y2="460"/><line class="d2" x1="212" y1="446" x2="212" y2="460"/>
+          <line class="d2" x1="222" y1="446" x2="222" y2="460"/><line class="d2" x1="232" y1="446" x2="232" y2="460"/>
+          <line class="d2" x1="242" y1="446" x2="242" y2="460"/><line class="d2" x1="252" y1="446" x2="252" y2="460"/>
+        </g>
+        <g class="lbl" data-part="gpu">
+          <circle class="ld" cx="370" cy="407" r="2.2"/><line class="dl" x1="372" y1="407" x2="396" y2="407"/>
+          <text class="lt" x="404" y="404">GRAPHICS CARD</text><text class="ls" x="404" y="418">PCIe x16 + its own power</text>
+        </g>
+
+        <!-- 05 SSD -->
+        <g class="p" data-part="ssd" tabindex="0" role="button" aria-label="M.2 SSD">
+          <text class="ix" x="184" y="510" text-anchor="end">05</text>
+          <rect class="st fl" x="196" y="494" width="124" height="30" rx="2"/>
+          <rect class="d2" x="210" y="501" width="18" height="16"/><rect class="d2" x="234" y="501" width="18" height="16"/>
+          <text class="it2" x="292" y="512" text-anchor="middle">M.2 2280</text>
+          <line class="d" x1="312" y1="494" x2="312" y2="502"/>
+        </g>
+        <g class="lbl" data-part="ssd">
+          <circle class="ld" cx="326" cy="509" r="2.2"/><line class="dl" x1="328" y1="509" x2="396" y2="509"/>
+          <text class="lt" x="404" y="506">M.2 SSD</text><text class="ls" x="404" y="520">NVMe — no cables</text>
+        </g>
+
+        <!-- 06 MOTHERBOARD -->
+        <g class="p" data-part="mobo" tabindex="0" role="button" aria-label="Motherboard">
+          <text class="ix" x="130" y="572" text-anchor="end">06</text>
+          <rect class="st fl" x="142" y="556" width="216" height="204" rx="4"/>
+          <rect class="d2" x="150" y="572" width="14" height="92"/>
+          <rect class="d2" x="153" y="578" width="8" height="12"/><rect class="d2" x="153" y="596" width="8" height="8"/><rect class="d2" x="153" y="610" width="8" height="16"/>
+          <rect class="d" x="208" y="560" width="84" height="11"/>
+          <line class="d2" x1="220" y1="560" x2="220" y2="571"/><line class="d2" x1="236" y1="560" x2="236" y2="571"/><line class="d2" x1="252" y1="560" x2="252" y2="571"/><line class="d2" x1="268" y1="560" x2="268" y2="571"/><line class="d2" x1="284" y1="560" x2="284" y2="571"/>
+          <rect class="st" x="220" y="580" width="64" height="64"/>
+          <rect class="d" x="232" y="592" width="40" height="40"/>
+          <rect class="st" x="300" y="576" width="9" height="88"/><rect class="st" x="316" y="576" width="9" height="88"/>
+          <text class="cx" x="331" y="584">02</text><text class="cx" x="214" y="576" text-anchor="end">03</text>
+          <rect class="d" x="344" y="636" width="10" height="56"/>
+          <rect class="st" x="158" y="688" width="124" height="11"/>
+          <line class="d2" x1="166" y1="688" x2="166" y2="699"/><line class="d2" x1="176" y1="688" x2="176" y2="699"/><line class="d2" x1="186" y1="688" x2="186" y2="699"/><line class="d2" x1="196" y1="688" x2="196" y2="699"/><line class="d2" x1="206" y1="688" x2="206" y2="699"/><line class="d2" x1="216" y1="688" x2="216" y2="699"/><line class="d2" x1="226" y1="688" x2="226" y2="699"/><line class="d2" x1="236" y1="688" x2="236" y2="699"/><line class="d2" x1="246" y1="688" x2="246" y2="699"/><line class="d2" x1="256" y1="688" x2="256" y2="699"/><line class="d2" x1="266" y1="688" x2="266" y2="699"/><line class="d2" x1="276" y1="688" x2="276" y2="699"/>
+          <text class="cx" x="158" y="683">04</text>
+          <rect class="d" x="298" y="686" width="40" height="40"/>
+          <path class="d2" d="M298 706 L318 686"/><path class="d2" d="M298 726 L338 686"/><path class="d2" d="M310 726 L338 698"/>
+          <rect class="d" x="158" y="724" width="70" height="8"/>
+          <circle class="d" cx="238" cy="728" r="2"/>
+          <text class="cx" x="158" y="719">05</text>
+          <circle class="d" cx="292" cy="744" r="6"/><path class="d2" d="M289 744 h6 M292 741 v6"/>
+          <circle class="d" cx="154" cy="568" r="3"/><circle class="d" cx="346" cy="568" r="3"/>
+          <circle class="d" cx="154" cy="748" r="3"/><circle class="d" cx="346" cy="748" r="3"/>
+        </g>
+        <g class="lbl" data-part="mobo">
+          <circle class="ld" cx="364" cy="658" r="2.2"/><line class="dl" x1="366" y1="658" x2="396" y2="658"/>
+          <text class="lt" x="404" y="655">MOTHERBOARD</text><text class="ls" x="404" y="669">the compatibility hub</text>
+        </g>
+
+        <!-- 07 PSU -->
+        <g class="p" data-part="psu" tabindex="0" role="button" aria-label="Power supply">
+          <text class="ix" x="156" y="804" text-anchor="end">07</text>
+          <rect class="st fl" x="168" y="788" width="164" height="80" rx="3"/>
+          <circle class="st" cx="206" cy="828" r="27"/><circle class="d" cx="206" cy="828" r="20"/><circle class="d" cx="206" cy="828" r="13"/><circle class="d" cx="206" cy="828" r="6"/>
+          <rect class="d" x="246" y="806" width="74" height="24"/>
+          <text class="it2" x="283" y="816" text-anchor="middle">ATX 3.1</text>
+          <text class="it2" x="283" y="826" text-anchor="middle">80+ GOLD</text>
+          <line class="st" x1="332" y1="808" x2="350" y2="808"/><rect class="d2" x="350" y="804" width="8" height="8"/>
+          <line class="st" x1="332" y1="828" x2="350" y2="828"/><rect class="d2" x="350" y="824" width="8" height="8"/>
+          <line class="st" x1="332" y1="848" x2="350" y2="848"/><rect class="d2" x="350" y="844" width="8" height="8"/>
+        </g>
+        <g class="lbl" data-part="psu">
+          <circle class="ld" cx="338" cy="828" r="2.2"/><line class="dl" x1="340" y1="828" x2="396" y2="828"/>
+          <text class="lt" x="404" y="825">POWER SUPPLY</text><text class="ls" x="404" y="839">sized with headroom</text>
+        </g>
+
+        <!-- 08 CASE (footprint) -->
+        <g class="p" data-part="case" tabindex="0" role="button" aria-label="Case">
+          <text class="ix" x="108" y="912" text-anchor="end">08</text>
+          <rect class="st fl" x="120" y="896" width="260" height="80" rx="4"/>
+          <rect class="di" x="132" y="906" width="236" height="60" rx="2"/>
+          <rect class="d2" x="121" y="904" width="7" height="22"/>
+          <circle class="d" cx="126" cy="946" r="3"/>
+          <circle class="d2" cx="152" cy="914" r="2"/><circle class="d2" cx="172" cy="914" r="2"/><circle class="d2" cx="192" cy="914" r="2"/>
+          <circle class="d2" cx="152" cy="958" r="2"/><circle class="d2" cx="172" cy="958" r="2"/><circle class="d2" cx="192" cy="958" r="2"/>
+          <rect class="di" x="314" y="912" width="48" height="48"/>
+          <text class="it2" x="338" y="940" text-anchor="middle">PSU</text>
+        </g>
+        <g class="lbl" data-part="case">
+          <circle class="ld" cx="386" cy="936" r="2.2"/><line class="dl" x1="388" y1="936" x2="396" y2="936"/>
+          <text class="lt" x="404" y="933">CASE · CHASSIS</text><text class="ls" x="404" y="947">footprint view</text>
+        </g>
+      </svg>
+      <p class="dia-hint"><i>HOVER / TAP</i> A COMPONENT — <i>CLICK</i> TO PIN IT</p>
+    </div>
+
+    <aside class="readout rv">
+      <div class="ro-index" id="roIndex">
+        <button class="idx" data-part="cooler"><b>01</b> CPU COOLER</button>
+        <button class="idx" data-part="ram"><b>02</b> MEMORY</button>
+        <button class="idx" data-part="cpu"><b>03</b> PROCESSOR</button>
+        <button class="idx" data-part="gpu"><b>04</b> GRAPHICS</button>
+        <button class="idx" data-part="ssd"><b>05</b> M.2 SSD</button>
+        <button class="idx on" data-part="mobo"><b>06</b> MOTHERBOARD</button>
+        <button class="idx" data-part="psu"><b>07</b> POWER SUPPLY</button>
+        <button class="idx" data-part="case"><b>08</b> CASE</button>
+      </div>
+      <div class="ro-panel">
+        <div class="ro-head"><span id="roNo">06</span><span id="roName">MOTHERBOARD</span></div>
+        <div id="roBody">
+          <div class="ro-row"><span class="k">ROLE</span><p id="roRole"></p></div>
+          <div class="ro-row"><span class="k">MATCH RULE</span><p id="roRule"></p></div>
+          <div class="ro-row warn"><span class="k">WATCH FOR</span><p id="roWatch"></p></div>
+        </div>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<!-- ================= 01 COMPATIBILITY ================= -->
+<section id="compat">
+  <div class="sec-head rv">
+    <div class="sec-no">SEC. 01</div>
+    <div><h2>What must match what</h2><p class="sub">THE MOTHERBOARD IS THE HUB — EVERYTHING PLUGS INTO IT, SO EVERYTHING ANSWERS TO IT</p></div>
+    <div class="sec-tag">SOCKET · RAM ·<br>FORM FACTOR</div>
+  </div>
+
+  <div class="rule-box rv">
+    <span class="rule-tag">FIELD RULE</span>
+    <p>The CPU and the motherboard must share a <b>socket</b>. That single match decides your RAM type, your cooler mount, and half of your shopping list. Pick the CPU first — the board follows, and memory follows the board.</p>
+    <div class="buyflow">
+      <span class="hot">1 · CPU</span><i>→</i>
+      <span>2 · MOTHERBOARD (SAME SOCKET)</span><i>→</i>
+      <span>3 · RAM (BOARD'S TYPE)</span><i>→</i>
+      <span>4 · EVERYTHING ELSE</span>
+    </div>
+  </div>
+
+  <div class="tbl-wrap rv">
+    <table>
+      <thead><tr><th>SOCKET</th><th>MAKER</th><th>CPU GENERATIONS</th><th>TYPICAL CHIPSETS</th><th>MEMORY</th></tr></thead>
+      <tbody>
+        <tr><td><span class="sock">AM5</span><br><span class="mk">AMD</span></td><td>AMD</td><td>Ryzen 7000 · 8000G · 9000</td><td>A620 · B650 · X670 · X870</td><td>DDR5 only</td></tr>
+        <tr><td><span class="sock">AM4</span><br><span class="mk">AMD</span></td><td>AMD</td><td>Ryzen 1000 → 5000 (very long-lived)</td><td>A320 · B450 · B550 · X570</td><td>DDR4 only</td></tr>
+        <tr><td><span class="sock">LGA1851</span><br><span class="mk">INTEL</span></td><td>Intel</td><td>Core Ultra 200S</td><td>B860 · Z890</td><td>DDR5 only</td></tr>
+        <tr><td><span class="sock">LGA1700</span><br><span class="mk">INTEL</span></td><td>Intel</td><td>Core 12th · 13th · 14th gen</td><td>H610 · B660/B760 · Z690/Z790</td><td>DDR4 <b>or</b> DDR5 — per board</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="foot-note rv"><b>Chipset decoder:</b> B-boards are the sensible middle for most builds. X / Z boards add overclocking and maximum ports. A / H boards are budget — perfectly fine, but glance at VRM cooling and the M.2 count before buying.</p>
+
+  <div class="compat-grid">
+    <ul class="r3 rv">
+      <h3 class="blk">MEMORY, IN THREE RULES</h3>
+      <li><span class="rn">R1</span><div><b>The notch is the key.</b><p>DDR4 and DDR5 have different notch positions and pin counts — a DDR5 stick physically cannot enter a DDR4 board. You don't pick a side; the motherboard already did.</p></div></li>
+      <li><span class="rn">R2</span><div><b>Two sticks beat one.</b><p>2 × 16 GB runs in dual channel — roughly double the memory bandwidth of a single stick. For 32 GB, buy a 2 × 16 kit, never 1 × 32.</p></div></li>
+      <li><span class="rn">R3</span><div><b>Speed needs enabling.</b><p>Kits ship at a safe base speed (e.g. 4800 MT/s). Turn on XMP (Intel) or EXPO (AMD) in the BIOS or you leave performance on the table. ~6000 MT/s is the sweet spot for AM5.</p></div></li>
+    </ul>
+    <div class="rv">
+      <h3 class="blk">FORM FACTORS</h3>
+      <div class="ff-box">
+        <svg id="ffsvg" viewBox="0 0 330 200" aria-label="Motherboard form factor sizes">
+          <rect class="fa" x="4" y="4" width="188" height="150"/>
+          <rect class="fa" x="4" y="4" width="150" height="150"/>
+          <rect class="fa" x="4" y="4" width="104" height="104"/>
+          <circle class="fl2" cx="12" cy="12" r="2.5"/><circle class="fl2" cx="184" cy="12" r="2.5"/>
+          <circle class="fl2" cx="12" cy="146" r="2.5"/><circle class="fl2" cx="184" cy="146" r="2.5"/>
+          <line class="fl2" x1="192" y1="14" x2="206" y2="14"/><text x="210" y="17">ATX · 305×244</text>
+          <line class="fl2" x1="154" y1="44" x2="206" y2="44"/><text x="210" y="47">M-ATX · 244×244</text>
+          <line class="fl2" x1="108" y1="74" x2="206" y2="74"/><text x="210" y="77">ITX · 170×170</text>
+        </svg>
+        <p class="ff-note"><b>Case rule:</b> an ATX case takes everything. An mATX board fits mATX and ATX cases. An ITX board fits anything — including shoeboxes. An ATX board fits only ATX-capable cases.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 02 SEQUENCE ================= -->
+<section id="sequence">
+  <div class="sec-head rv">
+    <div class="sec-no">SEC. 02</div>
+    <div><h2>Build sequence</h2><p class="sub">TEN STEPS, IN THE ONLY ORDER THAT WORKS</p></div>
+    <div class="sec-tag">BENCH → CASE →<br>FIRST POWER-ON</div>
+  </div>
+  <div class="seq-grid">
+    <div class="rail rv">
+      <p class="rail-cap">SEQ. 01→10</p>
+      <ol id="railList">
+        <li><a href="#st01">01 PREP</a></li>
+        <li><a href="#st02">02 CPU</a></li>
+        <li><a href="#st03">03 RAM</a></li>
+        <li><a href="#st04">04 M.2</a></li>
+        <li><a href="#st05">05 COOLER</a></li>
+        <li><a href="#st06">06 CASE</a></li>
+        <li><a href="#st07">07 BOARD</a></li>
+        <li><a href="#st08">08 POWER</a></li>
+        <li><a href="#st09">09 GPU</a></li>
+        <li><a href="#st10">10 BOOT</a></li>
+      </ol>
+    </div>
+    <div class="steps">
+      <article class="step" id="st01"><div class="s-no">01</div><div class="s-body">
+        <h3>Prep the bench</h3>
+        <p>Clear a table, get good light, one #2 Phillips. Unbox the motherboard onto its <b>cardboard</b> — never on the antistatic bag, whose inside surface is conductive. Keep screws sorted in a muffin tin or the box lids.</p>
+        <span class="co tip"><b>TIP</b>Build the core (board + CPU + RAM + cooler) on the bench first. Everything is easier before it lives inside a steel box.</span>
+      </div></article>
+      <article class="step" id="st02"><div class="s-no">02</div><div class="s-body">
+        <h3>Seat the CPU</h3>
+        <p>Lift the retention arm, open the plate. Align the gold triangle on the chip with the triangle on the socket and lower it in with <b>zero force</b> — if it needs pushing, it's misaligned. Close plate and arm.</p>
+        <span class="co"><b>NOTE</b>On Intel LGA and AMD AM5 the delicate pins live in the socket; on older AM4 they're on the chip. Either way: touch nothing in there.</span>
+      </div></article>
+      <article class="step" id="st03"><div class="s-no">03</div><div class="s-body">
+        <h3>Install memory</h3>
+        <p>Open the end latches, match the stick's notch to the slot's key, press down firmly at both ends until they <b>click</b>. For two sticks, use slots A2 + B2 — usually the 2nd and 4th from the CPU. Your manual confirms.</p>
+        <span class="co warn"><b>WARN</b>Sticks in the wrong slots can leave the board looking completely dead with everything else perfect.</span>
+      </div></article>
+      <article class="step" id="st04"><div class="s-no">04</div><div class="s-body">
+        <h3>Add the M.2 drive</h3>
+        <p>Slide the drive into the slot at about 30°, press it flat, secure the tiny screw (or tool-less clip). It only fits one way — no force required.</p>
+        <span class="co"><b>NOTE</b>On some boards the second M.2 slot steals SATA ports or shares lanes. One glance at the manual saves an hour of debugging.</span>
+      </div></article>
+      <article class="step" id="st05"><div class="s-no">05</div><div class="s-body">
+        <h3>Mount the cooler</h3>
+        <p>If the cooler has a plastic film on the cold plate — <b>peel it now</b>. Place a ~5 mm paste dot at the CPU center; mounting pressure spreads it. Tighten screws gradually in an X pattern, then plug the fan into the header labelled <b>CPU_FAN</b>.</p>
+        <span class="co warn"><b>WARN</b>Never power on without the cooler mounted — an uncooled CPU can reach throttling temperatures in seconds.</span>
+      </div></article>
+      <article class="step" id="st06"><div class="s-no">06</div><div class="s-body">
+        <h3>Case: shield + standoffs</h3>
+        <p>Install the I/O shield (if your board uses a separate one) from inside the case. Check the standoffs: exactly <b>one per motherboard hole</b>, and none anywhere else.</p>
+        <span class="co warn"><b>WARN</b>The forgotten I/O shield is the classic first-build tax — discovering it means unplugging the entire finished build.</span>
+      </div></article>
+      <article class="step" id="st07"><div class="s-no">07</div><div class="s-body">
+        <h3>Screw in the board</h3>
+        <p>Lower the board at an angle so the rear ports drop into the shield, set it onto the standoffs, and <b>start every screw before tightening any</b>. Snug is enough — a motherboard is not a wheel lug.</p>
+      </div></article>
+      <article class="step" id="st08"><div class="s-no">08</div><div class="s-body">
+        <h3>Power supply + cables</h3>
+        <p>Mount the PSU, fan toward the vent — fan-down if the case has a bottom vent with clearance, fan-up if it sits on carpet. Connect the 24-pin to the board and the 8-pin <b>EPS</b> to the top-left CPU header. GPU power comes next step.</p>
+        <span class="co warn"><b>WARN</b>EPS (CPU) and PCIe (GPU) 8-pin cables look similar but are keyed and wired differently. Never force one into the other's socket.</span>
+      </div></article>
+      <article class="step" id="st09"><div class="s-no">09</div><div class="s-body">
+        <h3>Graphics card</h3>
+        <p>Remove the slot covers, open the latch of the top PCIe x16 slot, press the card in until it clicks, screw the bracket. For cards above ~250 W, run <b>two separate PCIe cables</b> from the PSU rather than one daisy-chained pair.</p>
+      </div></article>
+      <article class="step" id="st10"><div class="s-no">10</div><div class="s-body">
+        <h3>First power-on</h3>
+        <p>Front-panel pins: find PWR_SW in the manual's F_PANEL diagram — it has no polarity. PSU rocker to "I", monitor into the <b>GPU</b>, tap power. Fans spin, screen wakes: you're in the BIOS. Enable XMP/EXPO, then boot your USB installer.</p>
+        <span class="co tip"><b>TIP</b>No POST? Reseat the RAM, recheck the 24-pin and EPS cables, confirm the monitor is in the GPU. That trio fixes most "dead" first boots.</span>
+      </div></article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 03 POWER ================= -->
+<section id="power">
+  <div class="sec-head rv">
+    <div class="sec-no">SEC. 03</div>
+    <div><h2>Power supply</h2><p class="sub">THE PART YOU NEVER CHEAP OUT ON</p></div>
+    <div class="sec-tag">CALCULATOR<br>INSIDE →</div>
+  </div>
+  <div class="power-grid">
+    <div class="rv">
+      <div class="p-row"><span class="pn">P-01</span><div><b>Headroom is not waste.</b><p>PSUs run most efficiently near 50% load, and modern GPUs spike toward twice their rated board power for milliseconds at a time. The calculator's margin absorbs all of it.</p></div></div>
+      <div class="p-row"><span class="pn">P-02</span><div><b>Efficiency ≠ quality.</b><p>"80 Plus" certifies how little power is wasted as heat — nothing more. Judge a unit by platform reputation and warranty: 80+ Gold with 7–10 years of cover is the honest tier to shop in.</p></div></div>
+      <div class="p-row"><span class="pn">P-03</span><div><b>Modularity is comfort, not performance.</b><p>Fully modular means only the cables you need and clean airflow. Semi-modular is fine on a budget. Electrically, they're the same idea.</p></div></div>
+      <div class="p-row"><span class="pn">P-04</span><div><b>Match the GPU era.</b><p>Cards using the 16-pin 12V-2x6 connector want an ATX 3.x unit with that connector natively — otherwise you're stacking bulky adapters and one more failure point.</p></div></div>
+      <div class="p-row"><span class="pn">P-05</span><div><b>The one hard rule.</b><p>Never carry a mystery PSU out of an old prebuilt into a new build. It's the cheapest part in the box — and the only one that can kill everything else on its way out.</p></div></div>
+    </div>
+
+    <div class="calc rv">
+      <div class="calc-head"><span>LOAD CALCULATOR</span><i>MODEL V.2</i></div>
+      <div class="calc-body">
+        <label class="f-label" for="cpuSel">PROCESSOR</label>
+        <div class="sel"><select id="cpuSel">
+          <option value="65">ENTRY — Core i3 / Ryzen 5 5500 · ~65 W</option>
+          <option value="90" selected>MAINSTREAM — Ryzen 5 7600 / i5-13400 · ~90 W</option>
+          <option value="120">GAMING — Ryzen 7 7800X3D · ~120 W</option>
+          <option value="125">PERFORMANCE — Ryzen 7 7700X / i5-14600K · ~125 W</option>
+          <option value="210">ENTHUSIAST — Ryzen 9 7900X / i7-14700K · ~210 W</option>
+          <option value="253">HALO — Core i9-14900K / Ryzen 9 7950X · ~253 W</option>
+        </select></div>
+        <label class="f-label" for="gpuSel">GRAPHICS</label>
+        <div class="sel"><select id="gpuSel">
+          <option value="0">NONE — integrated graphics only</option>
+          <option value="75">ENTRY — GTX 1650 / RX 6400 · ~75 W</option>
+          <option value="160" selected>MAINSTREAM — RTX 4060 / 5060 / RX 7600 · ~160 W</option>
+          <option value="250">UPPER MAIN — RTX 4070 Super / 5070 / RX 7800 XT · ~250 W</option>
+          <option value="320">HIGH END — RTX 4080 / 5070 Ti / RX 7900 XT · ~320 W</option>
+          <option value="450">HALO — RTX 4090 / RX 7900 XTX · ~450 W</option>
+        </select></div>
+        <label class="f-label">EXTRAS</label>
+        <div class="extra-row">
+          <label class="cb"><input type="checkbox" id="aioChk"><span class="bx"><svg viewBox="0 0 12 12" width="11" height="11"><path d="M2 6.5 5 9.5 10 3" fill="none" stroke="#F2EFE6" stroke-width="2" stroke-linecap="round"/></svg></span>LIQUID (AIO) COOLER</label>
+          <div class="sel" style="min-width:130px"><select id="fanSel">
+            <option value="2">2 FANS</option><option value="3" selected>3 FANS · TYPICAL</option>
+            <option value="4">4 FANS</option><option value="5">5 FANS</option>
+            <option value="6">6 FANS</option><option value="7">7+ FANS</option>
+          </select></div>
+        </div>
+        <hr>
+        <div class="mini"><span>EST. PEAK DRAW</span><b><span id="peakV">320</span> W</b></div>
+        <svg id="gauge" viewBox="0 0 424 60" aria-hidden="true">
+          <rect id="gBand" x="10" y="27" width="0" height="14"/>
+          <line class="gb" x1="10" y1="34" x2="414" y2="34"/>
+          <line class="gt" x1="10" y1="30" x2="10" y2="38"/><text x="10" y="52" text-anchor="middle">0</text>
+          <line class="gt" x1="122.5" y1="30" x2="122.5" y2="38"/><text x="122.5" y="52" text-anchor="middle">450</text>
+          <line class="gt" x1="147.5" y1="30" x2="147.5" y2="38"/><text x="147.5" y="52" text-anchor="middle">550</text>
+          <line class="gt" x1="172.5" y1="30" x2="172.5" y2="38"/><text x="172.5" y="52" text-anchor="middle">650</text>
+          <line class="gt" x1="197.5" y1="30" x2="197.5" y2="38"/><text x="197.5" y="52" text-anchor="middle">750</text>
+          <line class="gt" x1="222.5" y1="30" x2="222.5" y2="38"/><text x="222.5" y="52" text-anchor="middle">850</text>
+          <line class="gt" x1="260" y1="30" x2="260" y2="38"/><text x="260" y="52" text-anchor="middle">1000</text>
+          <line class="gt" x1="310" y1="30" x2="310" y2="38"/><text x="310" y="52" text-anchor="middle">1200</text>
+          <line class="gt" x1="410" y1="30" x2="410" y2="38"/><text x="410" y="52" text-anchor="middle">1600</text>
+          <rect id="gRec" x="152" y="16" width="2.5" height="36"/>
+          <g id="gPeak"><path d="M-6 22 L6 22 L0 31 Z"/><text id="gPeakTxt" y="16" text-anchor="middle">320 W</text></g>
+        </svg>
+        <p class="rec-lab">RECOMMENDED SUPPLY SIZE</p>
+        <div class="rec-num"><b id="recV">550</b><span>W</span></div>
+        <p id="recNote">A quality 80+ Bronze or Gold unit — spend the savings on the GPU.</p>
+        <p class="formula">MODEL — peak = CPU + GPU + 70 W system base + extras · recommended = peak × 1.5, rounded up to a real retail size. Transient spikes included.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 04 MISTAKES ================= -->
+<section id="mistakes">
+  <div class="sec-head rv">
+    <div class="sec-no">SEC. 04</div>
+    <div><h2>Failure modes</h2><p class="sub">EIGHT CLASSICS — ALL AVOIDABLE, ALL RECOVERABLE</p></div>
+    <div class="sec-tag">E-01 … E-08</div>
+  </div>
+  <ol class="ledger rv">
+    <li><span class="ec">E-01</span><b>The forgotten I/O shield</b><p>A thin frame behind the motherboard ports, discovered only at step 10 — which means near-full teardown. <b2>Fix:</b2> it goes in before the board does. Always.</p></li>
+    <li><span class="ec">E-02</span><b>Cooler film left on</b><p>The cold plate ships with a protective peel. Left on, paste never touches metal and the CPU thermal-throttles within minutes. <b2>Fix:</b2> bare copper, then the paste dot.</p></li>
+    <li><span class="ec">E-03</span><b>RAM in the wrong slots</b><p>Boards POST from specific slots first; sticks in slots 1+2 can look like a dead board. <b2>Fix:</b2> A2 + B2 — second and fourth from the CPU, per the manual.</p></li>
+    <li><span class="ec">E-04</span><b>EPS / PCIe cable swap</b><p>Both are 8-pin, both click; one in the wrong socket won't boot, and forcing it can fry a board. <b2>Fix:</b2> the cable marked CPU/EPS goes to the board's top-left; PCIe/VGA goes to the GPU.</p></li>
+    <li><span class="ec">E-05</span><b>Monitor in the motherboard</b><p>With a discrete GPU installed, the board's own video out is usually disabled: fans spin, screen stays black, panic begins. <b2>Fix:</b2> display cable into the graphics card.</p></li>
+    <li><span class="ec">E-06</span><b>Daisy-chained GPU power</b><p>One cable with two pigtails can't safely feed a hungry card through transient spikes — random shutdowns under load. <b2>Fix:</b2> two separate PCIe cables above ~250 W.</p></li>
+    <li><span class="ec">E-07</span><b>The stray standoff</b><p>An extra brass pillar behind the board, quietly shorting traces: a "dead" board that was assembled perfectly. <b2>Fix:</b2> one standoff per hole, zero extras.</p></li>
+    <li><span class="ec">E-08</span><b>Front-panel pin roulette</b><p>Power button wired to the wrong header pair — the PC is fine, the switch isn't. <b2>Fix:</b2> the manual's F_PANEL diagram; PWR_SW has no polarity, so +/− doesn't matter.</p></li>
+  </ol>
+</section>
+
+<!-- ================= 05 CHECKLIST ================= -->
+<section id="checklist">
+  <div class="sec-head rv">
+    <div class="sec-no">SEC. 05</div>
+    <div><h2>Flight check</h2><p class="sub">TICK IT BEFORE YOU BOOT IT</p></div>
+    <div class="sec-tag">INTERACTIVE —<br>ALL 10 TO CLEAR</div>
+  </div>
+  <div class="chk-grid">
+    <ul class="checks rv" id="checks">
+      <li><button type="button" class="chk"><span class="bx"><svg viewBox="0 0 12 12" width="12" height="12"><path d="M2 6.5 5 9.5 10 3" fill="none" stroke="#F2EFE6" stroke-width="2" stroke-linecap="round"/></svg></span><span class="t">Board sits on standoffs — one per hole, none loose</span><span class="ci">C-01</span></button></li>
+      <li><button type="button" class="chk"><span class="bx"><svg viewBox="0 0 12 12" width="12" height="12"><path d="M2 6.5 5 9.5 10 3" fill="none" stroke="#F2EFE6" stroke-width="2" stroke-linecap="round"/></svg></span><span class="t">CPU 8-pin EPS cable connected, top-left of the board</span><span class="ci">C-02</span></button></li>
+      <li><button type="button" class="chk"><span class="bx"><svg viewBox="0 0 12 12" width="12" height="12"><path d="M2 6.5 5 9.5 10 3" fill="none" stroke="#F2EFE6" stroke-width="2" stroke-linecap="round"/></svg></span><span class="t">24-pin ATX cable pushed fully home</span><span class="ci">C-03</span></button></li>
+      <li><button type="button" class="chk"><span class="bx"><svg viewBox="0 0 12 12" width="12" height="12"><path d="M2 6.5 5 9.5 10 3" fill="none" stroke="#F2EFE6" stroke-width="2" stroke-linecap="round"/></svg></span><span class="t">Cooler film peeled · paste applied · screws torqued in X</span><span class="ci">C-04</span></button></li>
+      <li><button type="button" class="chk"><span class="bx"><svg viewBox="0 0 12 12" width="12" height="12"><path d="M2 6.5 5 9.5 10 3" fill="none" stroke="#F2EFE6" stroke-width="2" stroke-linecap="round"/></svg></span><span class="t">RAM clicked into A2 + B2, both latches closed</span><span class="ci">C-05</span></button></li>
+      <li><button type="button" class="chk"><span class="bx"><svg viewBox="0 0 12 12" width="12" height="12"><path d="M2 6.5 5 9.5 10 3" fill="none" stroke="#F2EFE6" stroke-width="2" stroke-linecap="round"/></svg></span><span class="t">GPU fully seated, latch closed, power cables clicked</span><span class="ci">C-06</span></button></li>
+      <li><button type="button" class="chk"><span class="bx"><svg viewBox="0 0 12 12" width="12" height="12"><path d="M2 6.5 5 9.5 10 3" fill="none" stroke="#F2EFE6" stroke-width="2" stroke-linecap="round"/></svg></span><span class="t">Separate PCIe cable per GPU connector (if 250 W+)</span><span class="ci">C-07</span></button></li>
+      <li><button type="button" class="chk"><span class="bx"><svg viewBox="0 0 12 12" width="12" height="12"><path d="M2 6.5 5 9.5 10 3" fill="none" stroke="#F2EFE6" stroke-width="2" stroke-linecap="round"/></svg></span><span class="t">Monitor cable in the graphics card, not the board</span><span class="ci">C-08</span></button></li>
+      <li><button type="button" class="chk"><span class="bx"><svg viewBox="0 0 12 12" width="12" height="12"><path d="M2 6.5 5 9.5 10 3" fill="none" stroke="#F2EFE6" stroke-width="2" stroke-linecap="round"/></svg></span><span class="t">Front-panel PWR_SW on the manual's pins</span><span class="ci">C-09</span></button></li>
+      <li><button type="button" class="chk"><span class="bx"><svg viewBox="0 0 12 12" width="12" height="12"><path d="M2 6.5 5 9.5 10 3" fill="none" stroke="#F2EFE6" stroke-width="2" stroke-linecap="round"/></svg></span><span class="t">PSU rocker on "I" · no screws rattling in the case</span><span class="ci">C-10</span></button></li>
+    </ul>
+    <div class="cl-side rv">
+      <p class="cl-count">PREFLIGHT VERIFICATION</p>
+      <div class="cl-big"><span id="clN">0</span><i>/10</i></div>
+      <div class="cl-bar"><i id="clFill"></i></div>
+      <div class="stamp" id="stamp">Pre-flight complete<small>CLEARED FOR BOOT · PCM-01 QA</small></div>
+      <button type="button" id="resetChk">RESET CHECKLIST</button>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 06 FAQ ================= -->
+<section id="faq">
+  <div class="sec-head rv">
+    <div class="sec-no">SEC. 06</div>
+    <div><h2>Field questions</h2><p class="sub">ASKED AT EVERY WORKBENCH</p></div>
+    <div class="sec-tag">5 ANSWERS</div>
+  </div>
+  <div class="faq rv">
+    <div class="fq"><button type="button" class="faq-q"><span><span class="qn">Q1</span>Can I reuse the power supply from my old PC?</span><span class="ic"></span></button>
+      <div class="faq-a"><p>Only if it's a quality unit with the connectors you need. Prebuilt OEM PSUs are often the weakest link, and capacitors age — a ten-year-old no-name unit is a genuine risk next to a modern GPU. <b>A solid 650–750 W Gold unit costs about the same as a mouse</b> and is the best insurance in the whole build.</p></div></div>
+    <div class="fq"><button type="button" class="faq-q"><span><span class="qn">Q2</span>Do coolers still come with thermal paste?</span><span class="ic"></span></button>
+      <div class="faq-a"><p>Almost all do — pre-applied or as a small tube in the box. You only buy paste separately for bare high-end air coolers or when repasting years later. And no, more isn't better: <b>a 5 mm dot is plenty</b> — mounting pressure does the spreading.</p></div></div>
+    <div class="fq"><button type="button" class="faq-q"><span><span class="qn">Q3</span>DDR4 or DDR5?</span><span class="ic"></span></button>
+      <div class="faq-a"><p>Your motherboard decides, not your preference. AM4 → DDR4 only. AM5 and LGA1851 → DDR5 only. LGA1700 boards exist in both flavors — <b>check the board's spec sheet before buying RAM</b>, because the sticks will not physically fit the wrong type.</p></div></div>
+    <div class="fq"><button type="button" class="faq-q"><span><span class="qn">Q4</span>Will this graphics card fit?</span><span class="ic"></span></button>
+      <div class="faq-a"><p>Three checks, in order: <b>(1) length</b> — the case lists a max GPU length, compare it to the card; <b>(2) width</b> — 2, 2.5, 3 or 3.5-slot cards need the corresponding clearance; <b>(3) power</b> — the PSU needs the right connector and enough watts (see the calculator above). Miss check #1 and you're returning a 30 cm brick.</p></div></div>
+    <div class="fq"><button type="button" class="faq-q"><span><span class="qn">Q5</span>What order should I buy parts in?</span><span class="ic"></span></button>
+      <div class="faq-a"><p>CPU first → motherboard with the matching socket → RAM type is now locked (DDR4/5) → GPU sized to your monitor resolution → PSU from the calculator above → <b>case last</b>, because it's pure fit and taste. This order means no purchase can ever invalidate an earlier one.</p></div></div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="foot-in">
+    <span><b>PCM-01</b> — DESKTOP PC FIELD MANUAL · REV 2025.1</span>
+    <span>FIGURES ARE CONSERVATIVE RULES OF THUMB — YOUR COMPONENT MANUALS ALWAYS WIN AN ARGUMENT WITH A WEBSITE.</span>
+    <a href="#top">BACK TO TOP ↑</a>
+  </div>
+</footer>
+
+<script>
+/* ---------- helpers ---------- */
+const $  = (s, c=document) => c.querySelector(s);
+const $$ = (s, c=document) => [...c.querySelectorAll(s)];
+
+/* ---------- scroll progress ---------- */
+const prog = $('#prog');
+addEventListener('scroll', () => {
+  const h = document.documentElement;
+  prog.style.width = (h.scrollTop / (h.scrollHeight - innerHeight) * 100) + '%';
+}, {passive:true});
+
+/* ---------- nav scrollspy ---------- */
+const navLinks = $$('#nav a');
+const secSpy = new IntersectionObserver(es => {
+  es.forEach(e => {
+    if (e.isIntersecting) {
+      navLinks.forEach(a => a.classList.toggle('on', a.getAttribute('href') === '#' + e.target.id));
+    }
+  });
+}, {rootMargin:'-20% 0px -70% 0px'});
+ $$('main section[id]').forEach(s => secSpy.observe(s));
+
+/* ---------- reveal on scroll ---------- */
+const rvSpy = new IntersectionObserver(es => {
+  es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); rvSpy.unobserve(e.target); } });
+}, {threshold:.12});
+ $$('.rv').forEach(el => rvSpy.observe(el));
+
+/* ---------- exploded diagram ---------- */
+const PARTS = {
+  cooler:{no:'01', name:'CPU COOLER', role:"Pulls heat off the processor and moves it out of the way. An air tower or an all-in-one liquid loop — both do the same job, differently.",
+    rule:"Must support your CPU socket (AM5, LGA1851…) and must fit the case: air towers have a listed height limit, radiators a supported size.",
+    watch:"The protective film on the cold plate. It has ended more first builds than any dead component."},
+  ram:{no:'02', name:'MEMORY · 2 STICKS', role:"The CPU's fast scratch space. Everything you are actively doing right now lives here.",
+    rule:"Type (DDR4 / DDR5) is dictated by the motherboard — they are keyed differently and will not cross-fit. Two sticks = dual channel.",
+    watch:"Slot choice matters: two sticks go in A2 + B2, or many boards simply refuse to POST."},
+  cpu:{no:'03', name:'PROCESSOR', role:"The brain. Does the general computing; models with integrated graphics also render your display.",
+    rule:"Socket must match the motherboard exactly — AM4, AM5, LGA1700, LGA1851 are all physically different. One generation of wiggle room, no more.",
+    watch:"Bent socket pins. The chip drops in with zero force — if you are pressing, stop and realign."},
+  gpu:{no:'04', name:'GRAPHICS CARD', role:"Renders every pixel for gaming and 3D work. The biggest single draw on your power supply.",
+    rule:"Needs one free PCIe x16 slot, physical clearance in the case (length + slot width), and its own power connectors from the PSU.",
+    watch:"Running it on a single daisy-chained cable above ~250 W — use two separate PCIe runs from the unit."},
+  ssd:{no:'05', name:'M.2 SSD', role:"Fast permanent storage — OS, games, files. NVMe drives slot straight into the board; no data or power cables.",
+    rule:"The board needs a free M.2 socket; Gen4 / Gen5 drives only reach full speed on matching slots.",
+    watch:"Secondary M.2 slots often disable SATA ports or share lanes — one line in the manual explains it."},
+  mobo:{no:'06', name:'MOTHERBOARD', role:"Everything plugs into it. It decides your CPU, RAM type, storage and expansion — the compatibility hub of the whole build.",
+    rule:"Chosen after the CPU: matching socket, sensible chipset, correct RAM type, and a form factor your case accepts.",
+    watch:"Front-panel pin headers. The manual's F_PANEL diagram is the difference between a working power button and an hour of poking."},
+  psu:{no:'07', name:'POWER SUPPLY', role:"Turns wall AC into clean regulated DC for every other part. The one component that can take the whole system with it.",
+    rule:"Size it ~50% above estimated peak draw. Buy quality — 80+ Gold, long warranty. An efficiency badge is not a quality badge.",
+    watch:"The 8-pin EPS (CPU) cable looks like the PCIe (GPU) cable. They are not interchangeable. Ever."},
+  case:{no:'08', name:'CASE · CHASSIS', role:"Holds it all, feeds it cool air, keeps your knuckles safe. Shown here in footprint view from above.",
+    rule:"Must accept the motherboard form factor (ATX / m-ATX / ITX) plus the GPU's length and width.",
+    watch:"Airflow direction: front and bottom = intake, rear and top = exhaust. Dust filters belong where air comes in."}
+};
+const expSvg = $('#exp');
+const groups = $$('.p', expSvg);
+const labels = $$('.lbl', expSvg);
+const idxBtns = $$('.idx');
+let pinned = null;
+
+function setPart(id){
+  groups.forEach(g => g.classList.toggle('on', g.dataset.part === id));
+  labels.forEach(l => l.classList.toggle('on', l.dataset.part === id));
+  idxBtns.forEach(b => b.classList.toggle('on', b.dataset.part === id));
+  const d = PARTS[id];
+  $('#roNo').textContent = d.no;
+  $('#roName').textContent = d.name;
+  $('#roRole').textContent = d.role;
+  $('#roRule').textContent = d.rule;
+  $('#roWatch').textContent = d.watch;
+  const body = $('#roBody');
+  body.classList.remove('swap'); void body.offsetWidth; body.classList.add('swap');
+}
+function pick(id){ expSvg.classList.add('focus'); setPart(id); }
+groups.forEach(g => {
+  g.addEventListener('mouseenter', () => pick(g.dataset.part));
+  g.addEventListener('click', () => {
+    pinned = (pinned === g.dataset.part) ? null : g.dataset.part;
+    pick(pinned || g.dataset.part);
+  });
+  g.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); g.click(); } });
+});
+idxBtns.forEach(b => {
+  b.addEventListener('mouseenter', () => pick(b.dataset.part));
+  b.addEventListener('click', () => {
+    pinned = (pinned === b.dataset.part) ? null : b.dataset.part;
+    pick(b.dataset.part);
+  });
+});
+expSvg.addEventListener('mouseleave', () => {
+  expSvg.classList.remove('focus');
+  if (pinned) setPart(pinned);
+});
+setPart('mobo'); // default readout
+
+/* ---------- build-sequence scrollspy ---------- */
+const steps = $$('.step');
+const railItems = $$('#railList li');
+const stepSpy = new IntersectionObserver(es => {
+  es.forEach(e => {
+    if (e.isIntersecting) {
+      const i = steps.indexOf(e.target);
+      steps.forEach(s => s.classList.remove('now'));
+      railItems.forEach(li => li.classList.remove('now'));
+      e.target.classList.add('now');
+      if (railItems[i]) railItems[i].classList.add('now');
+    }
+  });
+}, {rootMargin:'-30% 0px -60% 0px'});
+steps.forEach(s => stepSpy.observe(s));
+
+/* ---------- PSU calculator ---------- */
+const SIZES = [450,550,650,750,850,1000,1200,1500,1600];
+const cpuSel = $('#cpuSel'), gpuSel = $('#gpuSel'), fanSel = $('#fanSel'), aioChk = $('#aioChk');
+const gx = w => 10 + Math.min(w,1600) / 1600 * 400;
+
+function tween(el, to){
+  const from = parseInt(el.dataset.v || '0', 10);
+  el.dataset.v = to;
+  const t0 = performance.now(), dur = 380;
+  (function f(t){
+    const k = Math.min(1, (t - t0) / dur);
+    const e = 1 - Math.pow(1 - k, 3);
+    el.textContent = Math.round(from + (to - from) * e);
+    if (k < 1) requestAnimationFrame(f);
+  })(t0);
+}
+function recalc(){
+  const cpu = +cpuSel.value, gpu = +gpuSel.value, fans = +fanSel.value, aio = aioChk.checked;
+  const peak = cpu + gpu + 70 + (aio ? 40 : 0) + Math.max(0, fans - 3) * 8;
+  const rec  = SIZES.find(s => s >= peak * 1.5) || 1600;
+
+  tween($('#peakV'), peak);
+  tween($('#recV'), rec);
+  $('#gPeakTxt').textContent = peak + ' W';
+
+  const xP = gx(peak), xR = gx(rec);
+  const band = $('#gBand');
+  band.setAttribute('x', xP);
+  band.setAttribute('width', Math.max(0, xR - xP));
+  $('#gRec').setAttribute('x', xR - 1.25);
+  $('#gPeak').style.transform = `translateX(${xP}px)`;
+
+  let note;
+  if (rec <= 550) note = 'A quality 80+ Bronze or Gold unit — spend the savings on the GPU.';
+  else if (rec <= 850) note = 'Aim for 80+ Gold with a 7–10 year warranty; fully modular if the budget allows.';
+  else note = '80+ Gold or better, ATX 3.1 with a native 12V-2x6 connector for modern GPUs.';
+  if (gpu === 0) note += ' Integrated graphics draw from the board — no PCIe cable needed.';
+  $('#recNote').textContent = note;
+}
+[cpuSel, gpuSel, fanSel].forEach(s => s.addEventListener('change', recalc));
+aioChk.addEventListener('change', recalc);
+recalc();
+
+/* ---------- flight-check ---------- */
+const chks = $$('.chk');
+const clFill = $('#clFill'), clN = $('#clN'), stamp = $('#stamp');
+function checkState(){
+  const done = chks.filter(c => c.classList.contains('done')).length;
+  clN.textContent = done;
+  clFill.style.width = (done / chks.length * 100) + '%';
+  if (done === chks.length) stamp.classList.add('show');
+  else stamp.classList.remove('show');
+}
+chks.forEach(c => c.addEventListener('click', () => { c.classList.toggle('done'); checkState(); }));
+ $('#resetChk').addEventListener('click', () => { chks.forEach(c => c.classList.remove('done')); checkState(); });
+checkState();
+
+/* ---------- FAQ accordion ---------- */
+ $$('.faq-q').forEach(q => {
+  q.addEventListener('click', () => {
+    const item = q.parentElement;
+    const ans = $('.faq-a', item);
+    const wasOpen = item.classList.contains('open');
+    $$('.fq').forEach(f => { f.classList.remove('open'); $('.faq-a', f).style.maxHeight = null; });
+    if (!wasOpen) { item.classList.add('open'); ans.style.maxHeight = ans.scrollHeight + 'px'; }
+  });
+});
+</script>
+</body>
+</html>
